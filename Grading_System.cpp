@@ -42,12 +42,13 @@ cout << "Enter the Student Name: ";
 getline(cin, studentData.stdname);
         for (char& c : studentData.stdname) {
             c = std::toupper(c);
-        }cout << "Enter the Section Name: ";
+        }
+        cout << "Enter the Section Name: ";
 getline(cin, studentData.stdsection);
         for (char& c : studentData.stdsection) {
             c = std::toupper(c);
         }
-cout << "Enter the Student Course Name: ";
+    cout << "Enter the Student Course Name: ";
 getline(cin, studentData.stdcourse);
         for (char& c : studentData.stdcourse) {
             c = std::toupper(c);
@@ -119,10 +120,10 @@ cin >> numRecit;
 cout << "Enter the number of Student Recitation: ";
 cin >> Recit;
 
-        if (Recit <= numRecit) {
+        if (numRecit < Recit) {
             cout << "Invalid input. Please enter a valid input as the number of classes attended should be less than the total number of classes.\n";
         }
-}while(Recit<=numRecit);
+}while(numRecit<Recit);
 
 Recitave = (static_cast<double>(Recit) / numRecit) * 100;
 cout << "Average Recitation Score: " << Recitave << endl;
@@ -136,10 +137,10 @@ cin >> totalClasses;
 cout << "Enter the number of classes attended: ";
 cin >> attendedClasses;
 
-        if (totalClasses <= attendedClasses) {
+        if (totalClasses < attendedClasses) {
             cout << "Invalid input. Please enter a valid input as the number of classes attended should be less than the total number of classes.\n";
         }
-}while(totalClasses<=attendedClasses);
+}while(totalClasses<attendedClasses);
 Attendave = (static_cast<double>(attendedClasses) / totalClasses) * 100;
 cout << "Average Attendace Score: " << Attendave << endl;
 studentData.Attendave[sem]=Attendave;
@@ -215,7 +216,7 @@ percentage=Quizpercent+Actpercent+Recitpercent+Attenpercent+Labpercent+Examperce
                               Labpercent * Labave +
                               Exampercent * Examave) /
                              (Quizpercent + Actpercent + Recitpercent + Attenpercent + Labpercent + Exampercent);
-cout << "Student Name: " << studentData.stdname << endl;
+cout << "\n\nStudent Name: " << studentData.stdname << endl;
 cout << "Section: " << studentData.stdsection << endl;
 cout << "Course: " << studentData.stdcourse << endl;
 cout << "Average Quiz Score: " << Quizave << endl;
