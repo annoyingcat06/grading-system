@@ -1,25 +1,28 @@
 #include <iostream>
 #include <limits>
-#include <cctype>
+
 using namespace std;
+ 
+const int MAX_STUDENTS = 100;
+const int MAX_SEMESTERS = 3;
 
 struct SemesterData {
-    double Quizave;
-    double Actave;
-    double Recitave;
-    double Attendave;
-    double Labave;
-    double Examave;
-    string name;
-    string Section;
-    string course;
-    
-} ;
+    string stdname,stdsection,stdcourse;
+double Quizave[MAX_SEMESTERS];
+double Actave[MAX_SEMESTERS];
+double Recitave[MAX_SEMESTERS];
+double Attendave[MAX_SEMESTERS];
+double Labave[MAX_SEMESTERS];
+double Examave[MAX_SEMESTERS];
+double AveGrade[MAX_SEMESTERS];
+};
+ 
 int main() {
     string Semester[3] = { "Prelim", "Midterm", "Final" };
-    SemesterData previousData[3];
-        char ans1, ans;
-    size_t i=0 ,j=0;
+SemesterData Students[MAX_STUDENTS];
+string Name, Section, key;
+string course;
+int numStudents=0;
 int Quizzes[20][2], numQuizzes, sumQuizzes = 0;
 int Act[20][2], numAct, sumAct = 0;
 int Recit, numRecit;
@@ -31,38 +34,35 @@ double Quizpercent,Actpercent,Recitpercent,Attenpercent,Labpercent,Exampercent;
 double totalQuizScore = 0,totalActScore=0,totalRecitScore=0,totalLabScore=0,totalExamScore=0;
 char separator;
 double percentage;
-        do {
+char ans;
 
-
-
-
+do{
+SemesterData studentData;
 cout << "Enter the Student Name: ";
-getline(cin, previousData[j].name);
-cout << "Enter the Section Name: ";
-getline(cin, previousData[j].Section);
+getline(cin, studentData.stdname);
+        for (char& c : studentData.stdname) {
+            c = std::toupper(c);
+        }cout << "Enter the Section Name: ";
+getline(cin, studentData.stdsection);
+        for (char& c : studentData.stdsection) {
+            c = std::toupper(c);
+        }
 cout << "Enter the Student Course Name: ";
-getline(cin, previousData[j].course);
-
-for (char& c : previousData[j].name) {
-    c = std::toupper(c);
-}
-for (char& c : previousData[j].Section) {
-    c = std::toupper(c);
-}
-for (char& c : previousData[j].course) {
-    c = std::toupper(c);
-}
-
-j++;
-for (size_t j = 0; j < 1; j++) {
+getline(cin, studentData.stdcourse);
+        for (char& c : studentData.stdcourse) {
+            c = std::toupper(c);
+        }
 
 
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
-            cout << "Semester " << Semester[j] << endl;
+for(int sem=0;sem<MAX_SEMESTERS;sem++){
+    int sumLab=0, sumAct = 0, sumQuizzes = 0;
+    double totalQuizScore = 0,totalActScore=0,totalRecitScore=0,totalLabScore=0,totalExamScore=0;
 
 
-
+	cout<<"SEMESTER "<<Semester[sem]<<endl;
+	cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 // Quizzes
 cout << "Enter the number of quizzes: ";
@@ -83,9 +83,9 @@ for (int i = 0; i < numQuizzes; i++) {
     totalQuizScore += Quizzes[i][1];
 }
 
-previousData[j].Quizave = (sumQuizzes / totalQuizScore) * 100;
-
-    cout << "Average Quiz Score: " << previousData[j].Quizave << endl;
+Quizave = (sumQuizzes / totalQuizScore) * 100;
+studentData.Quizave[sem]=Quizave;
+    cout << "Average Quiz Score: " <<Quizave<< endl;
 
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 // Activities
@@ -107,31 +107,42 @@ for (int i = 0; i < numAct; i++){
 
 }
 
-previousData[j].Actave =(sumAct/totalActScore)*100;
-    cout << "Average Activity Score: " << previousData[j].Actave << endl;
-
+Actave =(sumAct/totalActScore)*100;
+    cout << "Average Activity Score: " << Actave << endl;
+studentData.Actave[sem]=Actave;
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 // Recitations
+do{
 cout << "Enter the total number of Recitation: ";
 cin >> numRecit;
 cout << "Enter the number of Student Recitation: ";
 cin >> Recit;
 
-previousData[j].Recitave = (static_cast<double>(Recit) / numRecit) * 100;
-cout << "Average Recitation Score: " << previousData[j].Recitave << endl;
+        if (Recit <= numRecit) {
+            cout << "Invalid input. Please enter a valid input as the number of classes attended should be less than the total number of classes.\n";
+        }
+}while(Recit<=numRecit);
 
+Recitave = (static_cast<double>(Recit) / numRecit) * 100;
+cout << "Average Recitation Score: " << Recitave << endl;
+studentData.Recitave[sem]=Recitave;
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 // Attendance
+do{
 cout << "Enter the total number of classes: ";
 cin >> totalClasses;
 cout << "Enter the number of classes attended: ";
 cin >> attendedClasses;
 
-previousData[j].Attendave = (static_cast<double>(attendedClasses) / totalClasses) * 100;
-cout << "Average Attendace Score: " << previousData[j].Attendave << endl;
-
+        if (totalClasses <= attendedClasses) {
+            cout << "Invalid input. Please enter a valid input as the number of classes attended should be less than the total number of classes.\n";
+        }
+}while(totalClasses<=attendedClasses);
+Attendave = (static_cast<double>(attendedClasses) / totalClasses) * 100;
+cout << "Average Attendace Score: " << Attendave << endl;
+studentData.Attendave[sem]=Attendave;
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 //Laboratory
 cout << "Enter the number of Lab Act: ";
@@ -152,9 +163,9 @@ for (int i = 0; i < numLab; i++){
 
 }
 
-previousData[j].Labave =(sumLab/totalLabScore)*100;
-cout << "Average Laboratory Score: " << previousData[j].Labave << endl;
-
+Labave =(sumLab/totalLabScore)*100;
+cout << "Average Laboratory Score: " << Labave << endl;
+studentData.Labave[sem]=Labave;
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 //Exam
@@ -165,11 +176,16 @@ cout << "\n\n---------------------------------------------------------------\n\n
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Invalid input. Please enter a valid score as score/total (score <= total): ";
     }
-previousData[j].Examave = (static_cast<double>(Exam[0]) / Exam[1]) * 100;
-cout << "Average Exam Score: " << previousData[j].Examave << endl;
+Examave = (static_cast<double>(Exam[0]) / Exam[1]) * 100;
+studentData.Examave[sem]=Examave;
+cout << "Average Exam Score: " << Examave << endl;
+
+
 
 do{
-    cout << "Enter the weightage or percentage for each component:" << endl;
+    cout << "\n\n---------------------------------------------------------------\n\n\n";
+
+    cout << "\n\nEnter the weightage or percentage for each component:" << endl;
     cout << "Quiz: ";
     cin >> Quizpercent;
     cout << "Activity: ";
@@ -183,83 +199,128 @@ do{
     cout << "Exam: ";
     cin >> Exampercent;
 percentage=Quizpercent+Actpercent+Recitpercent+Attenpercent+Labpercent+Exampercent;
+ studentData.AveGrade[sem]=percentage;
+   
     if (percentage != 100) {
         cout << "The total weightage or percentage should be 100%. Please try again.\n" << endl;
     }
 } while (percentage!=100);
 
-cout << "Average Quiz Score: " << previousData[j].Quizave << endl;
-cout << "Average Activity Score: " << previousData[j].Actave << endl;
-cout << "Average Recitation Score: " << previousData[j].Recitave << endl;
-cout << "Average Attendace Score: " << previousData[j].Attendave << endl;
-cout << "Average Laboratory Score: " << previousData[j].Labave << endl;
-cout << "Average Exam Score: " << previousData[j].Examave << endl;
 
 
-
-
-    double weightedAverage = (Quizpercent * previousData[j].Quizave +
-                              Actpercent * previousData[j].Actave +
-                              Recitpercent * previousData[j].Recitave +
-                              Attenpercent * previousData[j].Attendave +
-                              Labpercent * previousData[j].Labave +
-                              Exampercent * previousData[j].Examave) /
+    double weightedAverage = (Quizpercent * Quizave +
+                              Actpercent * Actave +
+                              Recitpercent * Recitave +
+                              Attenpercent * Attendave +
+                              Labpercent * Labave +
+                              Exampercent * Examave) /
                              (Quizpercent + Actpercent + Recitpercent + Attenpercent + Labpercent + Exampercent);
-
-    cout << "Weighted Average: " << weightedAverage << endl;
-            cout << endl;
+cout << "Student Name: " << studentData.stdname << endl;
+cout << "Section: " << studentData.stdsection << endl;
+cout << "Course: " << studentData.stdcourse << endl;
+cout << "Average Quiz Score: " << Quizave << endl;
+cout << "Average Activity Score: " << Actave << endl;
+cout << "Average Recitation Score: " << Recitave << endl;
+cout << "Average Attendace Score: " << Attendave << endl;
+cout << "Average Laboratory Score: " << Labave << endl;
+cout << "Average Exam Score: " << Examave << endl;
+cout << "Weighted Average: " << weightedAverage << endl;
+cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 }
-        cout << "Do you want to continue? (Y/N): ";
-        cin >> ans1;
-        ans1 = tolower(ans1);
 
-        if (ans1 != 'y' && ans1 != 'n') {
-            cout << "Invalid input. Please enter Y or N." << endl;
-        }
+Students[numStudents]=studentData;
+numStudents++;
+do{
+cout<<"Do you want to Continue? Y/N: ";
+cin>> ans;
+        ans = tolower(ans);
 
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+if(ans!='y'&&ans!='n'){
+cout<<"Please Enter Valid Input.\n";
+cout << "\n\n---------------------------------------------------------------\n\n\n";
 
-    } while (ans1 == 'y');
-    cout << "Do you want to search for a student name? Y/N: ";
-    cin >> ans;
-    ans = tolower(ans);
+}    
+if (numStudents == MAX_STUDENTS) {
+        break;
+    }
 
-    if (ans == 'y') {
+    }while(ans!='y'&&ans!='n');
+
+cout << "\n\n---------------------------------------------------------------\n\n\n";
+
+}while(ans=='y');
+
         string searchName;
-        cin.ignore(); // Ignore the newline character
-        cout << "Enter the student name: ";
-        getline(cin, searchName);
 
-        // Convert search name to uppercase
+    char searchOption;
+    do{
+         cout << "Do you want to search for a student name? (Y/N): ";
+        cin >> searchOption;
+                searchOption = tolower(searchOption);
+        if(searchOption!='y'&&searchOption!='n'){
+        cout<<"Please Enter Valid Input.\n";    
+        cout << "\n\n---------------------------------------------------------------\n\n\n";
+ }      
+
+
+    }while(searchOption!='y'&&searchOption!='n');
+if(searchOption=='y'){
+do{
+        cout << "Enter the student name: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, searchName);
         for (char& c : searchName) {
             c = std::toupper(c);
         }
-
-        // Search for the student name in the previous data
         bool found = false;
-        for (size_t i = 0; i < j; i++) {
-            if (previousData[j].name == searchName) {
+
+        for (int student = 0; student < numStudents; student++) {
+            string storedName = Students[student].stdname; // Store the student's name in a separate variable
+        for (char& c : storedName) {
+            c = std::toupper(c);
+        }
+            if (searchName == storedName) { // Compare the search query with the uppercase name
                 found = true;
-                cout << "Previous Data for " << searchName << ":" << endl;
-                cout << "Semester " << Semester[j] << ":" << endl;
-                cout << "Quiz: " << previousData[j].Quizave << endl;
-                cout << "Activity: " << previousData[j].Actave << endl;
-                cout << "Recitation: " << previousData[j].Recitave << endl;
-                cout << "Attendance: " << previousData[j].Attendave << endl;
-                cout << "Lab Act: " << previousData[j].Labave << endl;
-                cout << "Exam: " << previousData[j].Examave << endl;
-                cout << endl;
+                cout << "Student Name: " << Students[student].stdname << ":" << endl;
+                cout << "Section Name: " << Students[student].stdsection << ":" << endl;
+                cout << "Course Name " << Students[student].stdcourse << ":" << endl;
+
+                for (int sem = 0; sem < MAX_SEMESTERS; sem++) {
+                    cout << "Semester " <<  Semester[sem] << ":" << endl;
+                    cout << "Quiz: " << Students[student].Quizave[sem] << endl;
+                    cout << "Activity: " << Students[student].Actave[sem] << endl;
+                    cout << "Recitation: " << Students[student].Recitave[sem] << endl;
+                    cout << "Attendance: " << Students[student].Attendave[sem] << endl;
+                    cout << "Lab Act: " << Students[student].Labave[sem] << endl;
+                    cout << "Exam: " << Students[student].Examave[sem] << endl;
+                    cout << "\n\n---------------------------------------------------------------\n\n\n";
+
+                }
+
+                break;
             }
         }
 
         if (!found) {
-            cout << "No previous data found for " << searchName << endl;
+            cout << "No data found for the entered name." << endl;
+            cout << "\n\n---------------------------------------------------------------\n\n\n";
+
         }
-    }
+
+        cout << "Do you want to search again? (Y/N): ";
+        cin >> searchOption;
+
+    } while (searchOption == 'Y' || searchOption == 'y');
+}
+    cout<<"Thank You for Using our System <33"<<endl;
+
+
+
 
 
 // Pause before program exit
 system("pause");
 return 0;
 }
+
