@@ -5,7 +5,7 @@ using namespace std;
  
 const int MAX_STUDENTS = 100;
 const int MAX_SEMESTERS = 3;
-
+//data storage
 struct SemesterData {
     string stdname,stdsection,stdcourse;
 double Quizave[MAX_SEMESTERS];
@@ -18,7 +18,8 @@ double AveGrade[MAX_SEMESTERS];
 };
  
 int main() {
-    string Semester[3] = { "Prelim", "Midterm", "Final" };
+	//Preperations
+string Semester[3] = { "Prelim", "Midterm", "Final" };
 SemesterData Students[MAX_STUDENTS];
 string Name, Section, key;
 string course;
@@ -35,11 +36,14 @@ double totalQuizScore = 0,totalActScore=0,totalRecitScore=0,totalLabScore=0,tota
 char separator;
 double percentage;
 char ans;
-
+cout<<"Welcome to our Grading System"<<endl<<"Press enter when you are ready : ]"<<endl;
 do{
-SemesterData studentData;
-cout << "Enter the Student Name: ";
-getline(cin, studentData.stdname);
+do{
+do{    
+    SemesterData studentData;
+    cin.ignore(); // Add this line to clear the input buffer
+    cout << "Enter the Student Name: ";
+    getline(cin, studentData.stdname);
         for (char& c : studentData.stdname) {
             c = std::toupper(c);
         }
@@ -181,7 +185,7 @@ Examave = (static_cast<double>(Exam[0]) / Exam[1]) * 100;
 studentData.Examave[sem]=Examave;
 cout << "Average Exam Score: " << Examave << endl;
 
-
+//to calculate the Average of the grades
 
 do{
     cout << "\n\n---------------------------------------------------------------\n\n\n";
@@ -207,7 +211,7 @@ percentage=Quizpercent+Actpercent+Recitpercent+Attenpercent+Labpercent+Examperce
     }
 } while (percentage!=100);
 
-
+//to display all average scores and grades
 
     double weightedAverage = (Quizpercent * Quizave +
                               Actpercent * Actave +
@@ -251,22 +255,25 @@ if (numStudents == MAX_STUDENTS) {
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 }while(ans=='y');
-
+//To search Student Data
         string searchName;
 
-    char searchOption;
+    
+    
     do{
-         cout << "Do you want to search for a student name? (Y/N): ";
-        cin >> searchOption;
-                searchOption = tolower(searchOption);
-        if(searchOption!='y'&&searchOption!='n'){
+         cout << "Do you want to search for a student Grades? (Y/N): ";
+        cin.ignore();         
+        cin >> ans;
+                ans = tolower(ans);
+        if(ans!='y'&&ans!='n'){
         cout<<"Please Enter Valid Input.\n";    
         cout << "\n\n---------------------------------------------------------------\n\n\n";
  }      
 
 
-    }while(searchOption!='y'&&searchOption!='n');
-if(searchOption=='y'){
+
+    }while(ans!='y'&&ans!='n');
+if(ans=='y'){
 do{
         cout << "Enter the student name: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -283,9 +290,9 @@ do{
         }
             if (searchName == storedName) { // Compare the search query with the uppercase name
                 found = true;
-                cout << "Student Name: " << Students[student].stdname << ":" << endl;
-                cout << "Section Name: " << Students[student].stdsection << ":" << endl;
-                cout << "Course Name " << Students[student].stdcourse << ":" << endl;
+                cout << "Student Name: " << Students[student].stdname << endl;
+                cout << "Section Name: " << Students[student].stdsection << endl;
+                cout << "Course Name " << Students[student].stdcourse << "\n\n" << endl;
 
                 for (int sem = 0; sem < MAX_SEMESTERS; sem++) {
                     cout << "Semester " <<  Semester[sem] << ":" << endl;
@@ -308,12 +315,38 @@ do{
             cout << "\n\n---------------------------------------------------------------\n\n\n";
 
         }
-
+do{
         cout << "Do you want to search again? (Y/N): ";
-        cin >> searchOption;
+        cin >> ans;
 
-    } while (searchOption == 'Y' || searchOption == 'y');
+cin>>ans;
+ans=tolower(ans);
+        if(ans!='y'&&ans!='n'){
+        cout<<"Please Enter Valid Input.\n";    
+            cout << "\n\n---------------------------------------------------------------\n\n\n";
+ }   
+}while(ans!='y'&&ans!='n');
+
+    } while (ans == 'y');
 }
+cout<<"Do you want to use again our System?(Y/N): ";
+cin>>ans;
+ans=tolower(ans);
+        if(ans!='y'&&ans!='n'){
+        cout<<"Please Enter Valid Input.\n";    
+            cout << "\n\n---------------------------------------------------------------\n\n\n";
+ }      
+}while(ans=='y');
+do{
+cout<<"Are you sure??? (Y/N)";
+cin>>ans;
+ans=tolower(ans);
+        if(ans!='y'&&ans!='n'){
+        cout<<"Please Enter Valid Input.\n";    
+            cout << "\n\n---------------------------------------------------------------\n\n\n";
+ } 
+}while(ans!='y'&&ans!='n');
+}while(ans=='n');
     cout<<"Thank You for Using our System <33"<<endl;
 
 
@@ -324,4 +357,3 @@ do{
 system("pause");
 return 0;
 }
-
