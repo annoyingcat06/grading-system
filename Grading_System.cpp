@@ -29,7 +29,7 @@ int Act[20][2], numAct, sumAct = 0;
 int Recit, numRecit;
 int totalClasses,attendedClasses;
 int Lab[20][2],numLab,sumLab=0;
-int Exam[2];
+int Exam[2],choose;
 double Quizave, Actave, Recitave,Attendave,Labave,Examave;
 double Quizpercent,Actpercent,Recitpercent,Attenpercent,Labpercent,Exampercent;
 double totalQuizScore = 0,totalActScore=0,totalRecitScore=0,totalLabScore=0,totalExamScore=0;
@@ -37,9 +37,20 @@ char separator;
 double percentage;
 char ans;
 cout<<"Welcome to our Grading System"<<endl<<"Press enter when you are ready : ]"<<endl;
-do{
-do{
-do{    
+do{     
+  
+    cout << "\t\t\t__________________________________________________\n\n\n";
+    cout << "\t\t\t                Welcome to registrar\n\n";
+    cout << "\t\t\tChoices:\n\n";
+    cout << "\t\t\t        Press 1 to Enter Student Grades\n\n";
+    cout << "\t\t\t        Press 2 to Search Student Grades\n\n";
+    cout << "\t\t\t        Press 3 to See Masterlist\n\n";
+    cout << "\t\t\tPlease Enter your choice: ";
+    cin >> choose;
+
+switch(choose){
+
+    case 1: 
     SemesterData studentData;
     cin.ignore(); // Add this line to clear the input buffer
     cout << "Enter the Student Name: ";
@@ -233,28 +244,11 @@ cout << "Weighted Average: " << weightedAverage << endl;
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
 }
-
+break;
 Students[numStudents]=studentData;
 numStudents++;
-do{
-cout<<"Do you want to Continue? Y/N: ";
-cin>> ans;
-        ans = tolower(ans);
 
-if(ans!='y'&&ans!='n'){
-cout<<"Please Enter Valid Input.\n";
-cout << "\n\n---------------------------------------------------------------\n\n\n";
-
-}    
-if (numStudents == MAX_STUDENTS) {
-        break;
-    }
-
-    }while(ans!='y'&&ans!='n');
-
-cout << "\n\n---------------------------------------------------------------\n\n\n";
-
-}while(ans=='y');
+case 2:
 //To search Student Data
         string searchName;
 
@@ -273,8 +267,9 @@ cout << "\n\n---------------------------------------------------------------\n\n
 
 
     }while(ans!='y'&&ans!='n');
+
 if(ans=='y'){
-do{
+
         cout << "Enter the student name: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, searchName);
@@ -315,40 +310,31 @@ do{
             cout << "\n\n---------------------------------------------------------------\n\n\n";
 
         }
-do{
-        cout << "Do you want to search again? (Y/N): ";
-        cin >> ans;
+break;
 
-cin>>ans;
-ans=tolower(ans);
-        if(ans!='y'&&ans!='n'){
-        cout<<"Please Enter Valid Input.\n";    
-            cout << "\n\n---------------------------------------------------------------\n\n\n";
- }   
-}while(ans!='y'&&ans!='n');
-
-    } while (ans == 'y');
 }
-cout<<"Do you want to use again our System?(Y/N): ";
-cin>>ans;
-ans=tolower(ans);
-        if(ans!='y'&&ans!='n'){
-        cout<<"Please Enter Valid Input.\n";    
-            cout << "\n\n---------------------------------------------------------------\n\n\n";
- }      
-}while(ans=='y');
-do{
-cout<<"Are you sure??? (Y/N)";
-cin>>ans;
-ans=tolower(ans);
-        if(ans!='y'&&ans!='n'){
-        cout<<"Please Enter Valid Input.\n";    
-            cout << "\n\n---------------------------------------------------------------\n\n\n";
- } 
-}while(ans!='y'&&ans!='n');
-}while(ans=='n');
-    cout<<"Thank You for Using our System <33"<<endl;
 
+}
+    cout<<"Thank You for Using our System <33"<<endl;
+do{
+cout<<"Do you want to Continue? Y/N: ";
+cin>> ans;
+        ans = tolower(ans);
+
+if(ans!='y'&&ans!='n'){
+cout<<"Please Enter Valid Input.\n";
+cout << "\n\n---------------------------------------------------------------\n\n\n";
+
+}    
+if (numStudents == MAX_STUDENTS) {
+        break;
+    }
+
+    }while(ans!='y'&&ans!='n');
+
+cout << "\n\n---------------------------------------------------------------\n\n\n";
+
+}while(choose!=3);
 
 
 
