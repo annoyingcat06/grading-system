@@ -45,13 +45,15 @@ do{
     cout << "\t\t\t        Press 1 to Enter Student Grades\n\n";
     cout << "\t\t\t        Press 2 to Search Student Grades\n\n";
     cout << "\t\t\t        Press 3 to See Masterlist\n\n";
+    cout << "\t\t\t        Press 4 to Exit\n\n";
+
     cout << "\t\t\tPlease Enter your choice: ";
     cin >> choose;
+    SemesterData studentData;
 
 switch(choose){
 
     case 1: 
-    SemesterData studentData;
     cin.ignore(); // Add this line to clear the input buffer
     cout << "Enter the Student Name: ";
     getline(cin, studentData.stdname);
@@ -243,33 +245,17 @@ cout << "Average Exam Score: " << Examave << endl;
 cout << "Weighted Average: " << weightedAverage << endl;
 cout << "\n\n---------------------------------------------------------------\n\n\n";
 
+
+
+
 }
-break;
 Students[numStudents]=studentData;
 numStudents++;
+break;
 
 case 2:
 //To search Student Data
         string searchName;
-
-    
-    
-    do{
-         cout << "Do you want to search for a student Grades? (Y/N): ";
-        cin.ignore();         
-        cin >> ans;
-                ans = tolower(ans);
-        if(ans!='y'&&ans!='n'){
-        cout<<"Please Enter Valid Input.\n";    
-        cout << "\n\n---------------------------------------------------------------\n\n\n";
- }      
-
-
-
-    }while(ans!='y'&&ans!='n');
-
-if(ans=='y'){
-
         cout << "Enter the student name: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, searchName);
@@ -310,31 +296,40 @@ if(ans=='y'){
             cout << "\n\n---------------------------------------------------------------\n\n\n";
 
         }
+
+
+
+break;
+case 3:
+        for (int student = 0; student < numStudents; student++) {
+            // Store the student's name in a separate variable
+                cout << "Student Name: " << Students[student].stdname << endl;
+                cout << "Section Name: " << Students[student].stdsection << endl;
+                cout << "Course Name " << Students[student].stdcourse << "\n\n" << endl;
+
+                for (int sem = 0; sem < MAX_SEMESTERS; sem++) {
+                    cout << "Semester " <<  Semester[sem] << ":" << endl;
+                    cout << "Quiz: " << Students[student].Quizave[sem] << endl;
+                    cout << "Activity: " << Students[student].Actave[sem] << endl;
+                    cout << "Recitation: " << Students[student].Recitave[sem] << endl;
+                    cout << "Attendance: " << Students[student].Attendave[sem] << endl;
+                    cout << "Lab Act: " << Students[student].Labave[sem] << endl;
+                    cout << "Exam: " << Students[student].Examave[sem] << endl;
+                    cout << "\n\n---------------------------------------------------------------\n\n\n";
+
+                }
+
+            }
+        
 break;
 
-}
+
+
 
 }
+
+}while(choose!=4);
     cout<<"Thank You for Using our System <33"<<endl;
-do{
-cout<<"Do you want to Continue? Y/N: ";
-cin>> ans;
-        ans = tolower(ans);
-
-if(ans!='y'&&ans!='n'){
-cout<<"Please Enter Valid Input.\n";
-cout << "\n\n---------------------------------------------------------------\n\n\n";
-
-}    
-if (numStudents == MAX_STUDENTS) {
-        break;
-    }
-
-    }while(ans!='y'&&ans!='n');
-
-cout << "\n\n---------------------------------------------------------------\n\n\n";
-
-}while(choose!=3);
 
 
 
